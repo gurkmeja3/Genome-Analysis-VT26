@@ -13,15 +13,11 @@
 module load Subread/2.1.1-GCC-13.3.0
 
 #define pathways
-ANNOT=""
-CLEAN_ANNOT="/cleaned_annotation.gff"
-BAM_DIR="/home/ebkl9290/Genome-Analysis-VT26/analyses/04_ed_analysis/hisat2/chr3_transcript_260427/"
+ANNOT="/proj/uppmax2026-1-61/nobackup/work/ebkl9290/braker3_260428/braker.gtf"
+BAM_DIR="/home/ebkl9290/Genome-Analysis-VT26/analyses/04_ed_analysis/hisat2/chr3_transcript_260427"
 OUT_DIR="/home/ebkl9290/Genome-Analysis-VT26/analyses/04_ed_analysis/featurecounts_260504"
 
 mkdir -p "$OUT_DIR"
-
-#remove nucleotides from feature file
-sed '/^##FASTA/,$d' "$ANNOT" > "$CLEAN_ANNOT"
 
 #feature count
 featureCounts \
@@ -29,6 +25,6 @@ featureCounts \
 -t exon \
 -g gene_id \
 -T 2 \
--a "$CLEAN_ANNOT" \
+-a "$ANNOT" \
 -o "$OUT_DIR"/counts_table.txt \
 "$BAM_DIR"/*.bam
